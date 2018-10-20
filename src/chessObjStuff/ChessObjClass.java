@@ -39,13 +39,13 @@ public void move()
 		int p=0;
 		if(a.equals("WR"))p=0;
 		if(a.equals("BR"))p=1;
-		legalMoveWR(p);
+		moveForWRBR(p);
 
 	}
 
 }
 
-public void legalMoveWR(int p)
+public void moveForWRBR(int p)
 {
 	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
 	//you get starting pos e.g in above example you get a1
@@ -59,8 +59,10 @@ public void legalMoveWR(int p)
 	int i=0;
 	int j=0;	
 	int checkR = 0;
+	
+	
+	//This moves it down
 	if(checkR==0)
-		
 	for(i=indexI; i<8; i++)
 	{
 		for(j=indexJ; j<indexJ+1;j++)
@@ -72,8 +74,9 @@ public void legalMoveWR(int p)
 				boards[indexI][indexJ]=" ";
 			}
 		}
-	}
+	} 
 
+	//This moves it up
 	if(checkR==0)
 	for( i=indexI; i>=0; i--)
 	{
@@ -88,32 +91,30 @@ public void legalMoveWR(int p)
 		}
 	}
 	
-	
-	System.out.println(indexI + "," + indexJ + " - " + indexIDest + "," + indexJDest);
+	//This moves it to right ->
 	if(checkR==0)
 	for( i=indexI; i<indexI+1; i++)
 	{
-		for( j=indexJ; j<8;j++)
+		for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 		{
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				System.out.println("we eating good tonight");
 				boards[i][j]="WR";
 				boards[indexI][indexJ]="  ";
 			}		
 		}
 	}
 	
+	//This moves it to left <-
 	if(checkR==0)
 	for(i=indexI; i<indexI+1; i++)
 	{
-		for(j=indexJ; j>=0;j--)
+		for(j=indexJ; j>=indexJDest ;j--) //		for(j=indexJ; j>=0;j--)
 		{
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				System.out.println("we eating good tonight");
 				boards[i][j]="WR";
 				boards[indexI][indexJ]="  ";
 			}
