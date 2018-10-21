@@ -12,7 +12,7 @@ int queen = 1;
 	
 //when game is started this becomes 1
 int start = 1;
-String rook = "WR";
+String rook = "wR";
 board b = new board();
 
 public ChessObjClass()
@@ -34,11 +34,11 @@ public void move()
 {
 	//This would get you the piece to move
 	String a = b.getPiece();
-	if(a.equals("WR") || a.equals("BR")) 
+	if(a.equals(wR) || a.equals("bR ")) 
 	{
 		int p=0;
-		if(a.equals("WR"))p=0;
-		if(a.equals("BR"))p=1;
+		if(a.equals(wR))p=0;
+		if(a.equals("bR "))p=1;
 		moveForWRBR(p);
 
 	}
@@ -70,8 +70,8 @@ public void moveForWRBR(int p)
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				boards[i][j]="WR";
-				boards[indexI][indexJ]=" ";
+				boards[i][j]=wR;
+				boards[indexI][indexJ]="   ";
 			}
 		}
 	} 
@@ -85,8 +85,8 @@ public void moveForWRBR(int p)
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				boards[i][j]="WR";
-				boards[indexI][indexJ]=" ";
+				boards[i][j]=wR;
+				boards[indexI][indexJ]="   ";
 			}
 		}
 	}
@@ -100,8 +100,8 @@ public void moveForWRBR(int p)
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				boards[i][j]="WR";
-				boards[indexI][indexJ]="  ";
+				boards[i][j]=wR;
+				boards[indexI][indexJ]="   ";
 			}		
 		}
 	}
@@ -115,14 +115,14 @@ public void moveForWRBR(int p)
 			if(i==indexIDest && j==indexJDest)
 			{	
 				checkR = 1;
-				boards[i][j]="WR";
-				boards[indexI][indexJ]="  ";
+				boards[i][j]=wR;
+				boards[indexI][indexJ]="   ";
 			}
 		}
 	}
 	
 	//Make this a new method - it checks for black spots and paints them back
-	if(checkR==1)if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="##";
+	if(checkR==1)if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
 	
 	if(checkR==0) System.out.println("Illegal move try again!");	
 }
