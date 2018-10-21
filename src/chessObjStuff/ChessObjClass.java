@@ -45,6 +45,11 @@ public void move()
 
 }
 
+public void legalMoveWRBR()
+{
+	
+}
+
 public void moveForWRBR(int p)
 {
 	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
@@ -60,71 +65,97 @@ public void moveForWRBR(int p)
 	int j=0;	
 	int checkR = 0;
 	
+	//NOTE: PUT AN IF STATEMENT WHERE P IS EITHER 0 OR 1
+	// P==1 IS WHITE
 	
-	//This moves it down
-	if(checkR==0)
-	for(i=indexI; i<8; i++)
+	//For black
+	if(p==1) {}
+	
+	if(p==0)
 	{
-		for(j=indexJ; j<indexJ+1;j++)
+		//This checks if I's are same then you're checking movements for L and R
+		if(indexI==indexIDest)
 		{
-			if(i==indexIDest && j==indexJDest)
-			{	
-				checkR = 1;
-				boards[i][j]=wR;
-				boards[indexI][indexJ]="   ";
-			}
-		}
-	} 
+			if(checkR==0)
+				for( i=indexI; i<indexI+1; i++)
+				{
+					for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
+					{
+						if(i==indexIDest && j==indexJDest)
+						{	
+							checkR = 1;
+							String io = Integer.toString(i);
+							String jo = Integer.toString(j);
+							boards[i][j]=wR;
+							moveTracker.add(io + jo);
+							boards[indexI][indexJ]="   ";
+						}		
+					}
+				}
+				
+				//This moves it to left <-
+				if(checkR==0)
+				for(i=indexI; i<indexI+1; i++)
+				{
+					for(j=indexJ; j>=indexJDest ;j--) //		for(j=indexJ; j>=0;j--)
+					{
+						if(i==indexIDest && j==indexJDest)
+						{	
+							checkR = 1;
+							String io = Integer.toString(i);
+							String jo = Integer.toString(j);
+							boards[i][j]=wR;
+							moveTracker.add(io + jo);
+							boards[indexI][indexJ]="   ";
+						}
+					}
+				}			
+		}	
 
-	//This moves it up
-	if(checkR==0)
-	for( i=indexI; i>=0; i--)
-	{
-		for( j=indexJ; j<indexJ+1;j++)
+		//This checks if J's are same then you're checking movements for up and down		
+		if(indexJ==indexJDest)
 		{
-			if(i==indexIDest && j==indexJDest)
-			{	
-				checkR = 1;
-				boards[i][j]=wR;
-				boards[indexI][indexJ]="   ";
-			}
+			if(checkR==0)
+				for(i=indexI; i<=indexIDest; i++)
+				{
+					for(j=indexJ; j<indexJ+1;j++)
+					{
+						if(i==indexIDest && j==indexJDest)
+						{	
+							checkR = 1;
+							String io = Integer.toString(i);
+							String jo = Integer.toString(j);
+							boards[i][j]=wR;
+							moveTracker.add(io + jo);
+							boards[indexI][indexJ]="   ";
+						}
+					}
+				} 
+
+				//This moves it up
+				if(checkR==0)
+				for( i=indexI; i>=indexIDest; i--)
+				{
+					for( j=indexJ; j<indexJ+1;j++)
+					{
+						if(i==indexIDest && j==indexJDest)
+						{	
+							checkR = 1;
+							String io = Integer.toString(i);
+							String jo = Integer.toString(j);
+							boards[i][j]=wR;
+							moveTracker.add(io + jo);
+							boards[indexI][indexJ]="   ";
+						}
+					}
+				}				
 		}
 	}
-	
-	//This moves it to right ->
-	if(checkR==0)
-	for( i=indexI; i<indexI+1; i++)
-	{
-		for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
-		{
-			if(i==indexIDest && j==indexJDest)
-			{	
-				checkR = 1;
-				boards[i][j]=wR;
-				boards[indexI][indexJ]="   ";
-			}		
-		}
-	}
-	
-	//This moves it to left <-
-	if(checkR==0)
-	for(i=indexI; i<indexI+1; i++)
-	{
-		for(j=indexJ; j>=indexJDest ;j--) //		for(j=indexJ; j>=0;j--)
-		{
-			if(i==indexIDest && j==indexJDest)
-			{	
-				checkR = 1;
-				boards[i][j]=wR;
-				boards[indexI][indexJ]="   ";
-			}
-		}
-	}
-	
-	//Make this a new method - it checks for black spots and paints them back
+		
+		//Make this a new method - it checks for black spots and paints them back
 	if(checkR==1)if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
-	
-	if(checkR==0) System.out.println("Illegal move try again!");	
+		
+	if(checkR==0) System.out.println("Illegal move try again!");				
 }
 	
 }
