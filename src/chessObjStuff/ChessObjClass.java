@@ -15,10 +15,14 @@ int start = 1;
 String rook = "wR";
 board b = new board();
 
+
+
 public ChessObjClass()
 {
 	//board b = new board();
 	b.initializePiece(rook);
+	moveTracker.add("70"); //wR
+	moveTracker.add("77"); //wR starting pos in AL
 	b.showBoard();
 }
 
@@ -64,6 +68,7 @@ public void moveForWRBR(int p)
 	int i=0;
 	int j=0;	
 	int checkR = 0;
+	int counterwr = 0;
 	
 	//NOTE: PUT AN IF STATEMENT WHERE P IS EITHER 0 OR 1
 	// P==1 IS WHITE
@@ -71,17 +76,37 @@ public void moveForWRBR(int p)
 	//For black
 	if(p==1) {}
 	
+	//For White
 	if(p==0)
 	{
-		//This checks if I's are same then you're checking movements for L and R
+		//This checks if I's are same then you're checking movements for Left  and Right
+
 		if(indexI==indexIDest)
 		{
+			
+			String al1 = "";
+			String al2 = "";
+			int pr = indexI;
+			int q = indexJ;
+			
+			//This moves it to right ->
 			if(checkR==0)
 				for( i=indexI; i<indexI+1; i++)
 				{
 					for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 					{
-						if(i==indexIDest && j==indexJDest)
+						al1 = Integer.toString(i);
+						al2 = Integer.toString(j);
+						String c = al1 + al2;
+						//System.out.println(i + "," + j + "- " + pr + " " + q);
+						//This part checks arraylist for positions and then determines if its legal move or not
+						if( moveTracker.contains(c) && j!=q )// && (i!=pr && j!=q) )
+							{//(i!=pr && j!=q) // Only J==Q becuase  we know I is equal
+								System.out.println("Illegal!");
+								checkR=0;break;
+							}
+						
+						if(i==indexIDest && j==indexJDest && !moveTracker.contains(c))
 						{	
 							checkR = 1;
 							String io = Integer.toString(i);
@@ -99,6 +124,16 @@ public void moveForWRBR(int p)
 				{
 					for(j=indexJ; j>=indexJDest ;j--) //		for(j=indexJ; j>=0;j--)
 					{
+						al1 = Integer.toString(i);
+						al2 = Integer.toString(j);
+						String c = al1 + al2;
+						//System.out.println(i + "," + j + "- " + pr + " " + q);
+						
+						if( moveTracker.contains(c) && j!=q )// && (i!=pr && j!=q) )
+							{//(i!=pr && j!=q) // Only J==Q becuase  we know I is equal
+								System.out.println("Illegal!");
+								checkR=0;break;
+							}						
 						if(i==indexIDest && j==indexJDest)
 						{	
 							checkR = 1;
@@ -153,8 +188,16 @@ public void moveForWRBR(int p)
 	}
 		
 		//Make this a new method - it checks for black spots and paints them back
-	if(checkR==1)if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
-		
+	if(checkR==1)
+		{
+			//REMOVE (indexI,IndexJ) from Arraylist
+		String g1 = Integer.toString(indexI);
+		String g2 = Integer.toString(indexJ);		
+		String g = g1+g2;
+			if( moveTracker.contains(g) )moveTracker.remove(g);
+			if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
+			System.out.println(moveTracker);
+		}
 	if(checkR==0) System.out.println("Illegal move try again!");				
 }
 	
