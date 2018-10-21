@@ -6,6 +6,9 @@ static String[][] boards = new String[9][9];
 String[][] boardsNonEditable = new String[9][9]; //This one is a blank grid with blackspots to check which
 //index has a black spot so then we can add blackspots on the static array
 
+String wR = "wR ";
+String wN = "wN ";
+String wQ = "wQ ";
 
 public board()
 {
@@ -24,7 +27,7 @@ public board()
 	{
 		for(int j=0;j<8;j++)
 		{
-			boards[i][j] = "  ";
+			boards[i][j] = "   ";
 			boardsNonEditable[i][j] = " ";
 		}
 	}		
@@ -48,35 +51,35 @@ public board()
 		{
 			switch(j) {
 			case 0:
-				boards[i][j] ="a ";
-				boardsNonEditable[i][j] ="a ";
+				boards[i][j] =" a ";
+				boardsNonEditable[i][j] ="a";
 				break;
 			case 1:
-				boards[i][j] ="b ";
+				boards[i][j] =" b ";
 				boardsNonEditable[i][j] ="b ";
 				break;
 			case 2:
-				boards[i][j] ="c |";		
+				boards[i][j] =" c ";		
 				boardsNonEditable[i][j] ="c ";		
 				break;
 			case 3:
-				boards[i][j] ="d ";
+				boards[i][j] =" d ";
 				boardsNonEditable[i][j] ="d ";
 				break;
 			case 4:
-				boards[i][j] ="e ";	
+				boards[i][j] =" e ";	
 				boardsNonEditable[i][j] ="e ";	
 				break;
 			case 5:
-				boards[i][j] ="f ";	
+				boards[i][j] =" f ";	
 				boardsNonEditable[i][j] ="f ";	
 				break;
 			case 6:
-				boards[i][j] ="g ";	
+				boards[i][j] =" g ";	
 				boardsNonEditable[i][j] ="g ";	
 				break;
 			case 7:
-				boards[i][j] ="h ";	
+				boards[i][j] =" h";	
 				boardsNonEditable[i][j] ="h ";	
 				break;
 			default:;
@@ -101,7 +104,7 @@ public void setBlackSpots()
 		{
 			for(int j=1;j<8;j=j+2)
 			{
-				boards[i][j] = "##"; 
+				boards[i][j] = "## "; 
 				boardsNonEditable[i][j]  = "##"; 
 			}			
 		}
@@ -110,7 +113,7 @@ public void setBlackSpots()
 		{
 			for(int j=0;j<8;j=j+2)
 			{
-				boards[i][j] = "##";
+				boards[i][j] = "## ";
 				boardsNonEditable[i][j]  = "##";
 			}			
 		}		
@@ -135,20 +138,24 @@ public void showBoard()
 //We need an interface for this one
 public void initializePiece(String a)
 {
-	if(a.equals("WR"))
+	if(a.equals("wR"))
 		{
 		boards[7][0] = null;	
-		boards[7][0] = "WR";	
+		boards[7][0] = wR;
+		//boards[7][1] = "wN ";
+		//boards[7][2] = "wB ";
+		//boards[7][3] = "wQ ";		
+		//boards[6][0] = "wp ";
 		boards[7][7] = null;
-		boards[7][7] = "WR";
+		boards[7][7] = wR;
 		}
 }
-
+/*
 public void move(int a)
-{
+{ 
 	
 }
-
+*/
 
 
 
@@ -162,7 +169,7 @@ return "";
 //This method checks if the given position is a Piece or not
 public boolean isPiece(int a,int b)
 {
-	if( ((boards[a][b]).equals("WR")) || ((boards[a][b]).equals("WQ")) || ((boards[a][b]).equals("WN")))
+	if( ((boards[a][b]).equals(wR)) || ((boards[a][b]).equals(wQ)) || ((boards[a][b]).equals(wN)))
 	{
 		return true;
 	}
@@ -298,11 +305,5 @@ public String routeTranslation(String route)
 
 
 
-
-@Override
-public void move() {
-	// TODO Auto-generated method stub
-	
-}
 
 }
