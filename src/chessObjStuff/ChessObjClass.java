@@ -25,10 +25,10 @@ public ChessObjClass()
 	moveTracker.add("70"); //wR
 	moveTracker.add("77"); //wR starting pos in AL
 	
-	moveTracker.add("44");
-	moveTracker.add("76");
+	moveTracker.add("71"); // wN
+	moveTracker.add("76"); //wN 
 	//moveTracker.add("72");
-	//moveTracker.add("73");
+	moveTracker.add("73"); // wQ queen
 			
 	
 	b.showBoard();
@@ -62,6 +62,24 @@ public void move()
 		if(a.equals("bN "))p=1;
 		moveForwNbN(p);
 	}	
+
+	if(a.equals(wQ) || a.equals("bQ ")) 
+	{
+		int p=0;
+		if(a.equals(wQ))p=0;
+		
+		if(a.equals("bN "))p=1;
+		moveForWQBQ(p); 
+	}	
+	
+	if(a.equals(wB) || a.equals("bB ")) 
+	{
+		int p=0;
+		if(a.equals(wB))p=0;
+		
+		if(a.equals("bB "))p=1;
+		moveForwBbB(p); 
+	}		
 	
 }
 
@@ -87,15 +105,13 @@ public void moveForwNbN(int p)
 			if(cc==0)stepsUD++;	
 			for( j=indexJDest; j>=indexJDest;j--)		//for( j=indexJ; j<8;j++)
 			{
-				if(cc==0)stepsLR++;	al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);
-				String c = al1 + al2;
+				if(cc==0)stepsLR++;	al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
 				if( moveTracker.contains(c) ){checkN=0;break;}
 					
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==3))
 				{	
-					cc=1;checkN = 1;String io = Integer.toString(i);String jo = Integer.toString(j);
-					boards[i][j]=wN;moveTracker.add(io + jo);boards[indexI][indexJ]="   ";
-					}
+					cc=1;checkN = 1;setPiecesAgain(i,j,wN,indexI,indexJ);
+				}
 			}			
 			if(stepsUD!=1 && stepsLR!=3)checkN=0;	
 		}
@@ -112,8 +128,8 @@ public void moveForwNbN(int p)
 					
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==3))
 				{	
-					cc=1;checkN = 1;String io = Integer.toString(i);String jo = Integer.toString(j);boards[i][j]=wN;
-					moveTracker.add(io + jo);boards[indexI][indexJ]="   ";
+					cc=1;checkN = 1;
+					setPiecesAgain(i,j,wN,indexI,indexJ);
 				}
 			}			
 			if(stepsUD!=1 && stepsLR!=3)checkN=0;	
@@ -133,12 +149,8 @@ public void moveForwNbN(int p)
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
 				{	
 					cc=1;checkN = 1;
-					String io = Integer.toString(i);
-					String jo = Integer.toString(j);
-					boards[i][j]=wN;
-					moveTracker.add(io + jo);
-					boards[indexI][indexJ]="   ";
-					}
+					setPiecesAgain(i,j,wN,indexI,indexJ);
+				}
 			}
 			if(cc==0)stepsUD++;	
 			if(stepsUD!=1 && stepsLR!=3)checkN=0;	
@@ -153,8 +165,10 @@ public void moveForwNbN(int p)
 					if( moveTracker.contains(c) ){checkN=0;break;}
 					
 					if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
-					{	cc=1;checkN = 1;String io = Integer.toString(i);String jo = Integer.toString(j);boards[i][j]=wN;
-						moveTracker.add(io + jo);boards[indexI][indexJ]="   ";}
+					{	
+						cc=1;checkN = 1;
+						setPiecesAgain(i,j,wN,indexI,indexJ);
+					}
 				}
 				if(cc==0)stepsUD++;if(stepsUD!=1 && stepsLR!=3)checkN=0;	
 			}
@@ -170,21 +184,13 @@ public void moveForwNbN(int p)
 			if(cc==0)stepsUD++;	
 			for( j=indexJDest; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 			{
-				if(cc==0)stepsLR++;
-				al1 = Integer.toString(indexIDest);
-				al2 = Integer.toString(indexJDest);
-				String c = al1 + al2;
-				if( moveTracker.contains(c) )
-					{checkN=0;break;}
+				if(cc==0)stepsLR++;	al1 = Integer.toString(indexIDest);al2 = Integer.toString(indexJDest);String c = al1 + al2;
+				if( moveTracker.contains(c) ){checkN=0;break;}
 					
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==3))
 				{	
 					cc=1;checkN = 1;
-					String io = Integer.toString(i);
-					String jo = Integer.toString(j);
-					boards[i][j]=wN;
-					moveTracker.add(io + jo);
-					boards[indexI][indexJ]="   ";
+					setPiecesAgain(i,j,wN,indexI,indexJ);
 				}
 			}			
 			if(stepsUD!=1 && stepsLR!=3)checkN=0;	
@@ -198,21 +204,13 @@ public void moveForwNbN(int p)
 			if(cc==0)stepsUD++;	
 			for( j=indexJDest; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 			{
-				if(cc==0)stepsLR++;	
-				al1 = Integer.toString(indexIDest);
-				al2 = Integer.toString(indexJDest);
-				String c = al1 + al2;
-				if( moveTracker.contains(c) )
-					{checkN=0;break;}
+				if(cc==0)stepsLR++;al1 = Integer.toString(indexIDest);al2 = Integer.toString(indexJDest);String c = al1 + al2;
+				if( moveTracker.contains(c) ){checkN=0;break;}
 					
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==3))
 				{	
 					cc=1;checkN = 1;
-					String io = Integer.toString(i);
-					String jo = Integer.toString(j);
-					boards[i][j]=wN;
-					moveTracker.add(io + jo);
-					boards[indexI][indexJ]="   ";
+					setPiecesAgain(i,j,wN,indexI,indexJ);	
 				}
 			}			
 			if(stepsUD!=1 && stepsLR!=3)checkN=0;	
@@ -224,15 +222,14 @@ public void moveForwNbN(int p)
 		{
 			for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 			{
-				if(cc==0)stepsLR++;
-				al1 = Integer.toString(indexIDest);al2 = Integer.toString(indexJDest);
-				String c = al1 + al2;
-				if( moveTracker.contains(c) )
-					{checkN=0;break;}
+				if(cc==0)stepsLR++;	al1 = Integer.toString(indexIDest);al2 = Integer.toString(indexJDest);String c = al1 + al2;
+				if( moveTracker.contains(c) ){checkN=0;break;}
 				
 				if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
-				{	cc=1;checkN = 1;String io = Integer.toString(i);String jo = Integer.toString(j);boards[i][j]=wN;
-					moveTracker.add(io + jo);boards[indexI][indexJ]="   ";}
+				{	
+					cc=1;checkN = 1;
+					setPiecesAgain(i,j,wN,indexI,indexJ);
+				}
 			}
 			if(cc==0)stepsUD++;if(stepsUD!=1 && stepsLR!=3)checkN=0;	
 		}
@@ -242,22 +239,13 @@ public void moveForwNbN(int p)
 			{
 				for( j=indexJ; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
 				{
-					System.out.println(i + "," + j);
-					if(cc==0)stepsLR++;	
-					al1 = Integer.toString(indexIDest);
-					al2 = Integer.toString(indexJDest);
-					String c = al1 + al2;
-					if( moveTracker.contains(c) )
-					{checkN=0;break;}
+					if(cc==0)stepsLR++;al1 = Integer.toString(indexIDest);al2 = Integer.toString(indexJDest);String c = al1 + al2;
+					if( moveTracker.contains(c) ){checkN=0;break;}
 					
 					if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
 					{	
 						cc=1;checkN = 1;
-						String io = Integer.toString(i);
-						String jo = Integer.toString(j);
-						boards[i][j]=wN;
-						moveTracker.add(io + jo);
-						boards[indexI][indexJ]="   ";
+						setPiecesAgain(i,j,wN,indexI,indexJ);						
 					}
 				}
 				if(cc==0)stepsUD++;
@@ -265,11 +253,10 @@ public void moveForwNbN(int p)
 			}
 	}	
 	//////////////////////////////// 
-	
-	
+
 	if(checkN==0) { System.out.println("Illegal move try again!");	}
 	if(checkN==1)
-	{
+	{ 
 			//REMOVE (indexI,IndexJ) from Arraylist
 			String g1 = Integer.toString(indexI);
 			String g2 = Integer.toString(indexJ);		
@@ -281,6 +268,108 @@ public void moveForwNbN(int p)
 }
 
 
+//////////////////////////
+public void moveForwBbB(int p)
+{
+	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
+	//you get starting pos e.g in above example you get a1
+	int indexI = intcordinatesfromString(abc,0);
+	int indexJ = intcordinatesfromString(abc,1);
+	//you get destination pos e.g in above example you get e5
+	int indexIDest = intcordinatesfromString(abc,3);
+	int indexJDest = intcordinatesfromString(abc,4);
+	
+	int i=0;
+	int j=0;	
+	int checkR = 0;
+	String al1 = "";String al2 = "";
+	
+	if(p==0)
+	{
+		//This moves upper left or right diagonal
+		if(indexI>indexIDest)
+		{
+			//moves up left diagonal
+			if(indexJDest<indexJ)
+			{
+				for( i=indexI; i>=indexIDest; i--)
+				{
+					for( j=i; j>=indexJDest;j++)		//for( j=indexJ; j<8;j++)
+					{
+						System.out.println(i + "," + j);
+						/*
+						if(cc==0)stepsLR++;
+						al1 = Integer.toString(indexIDest);
+						al2 = Integer.toString(indexJDest);
+						String c = al1 + al2;
+						if( moveTracker.contains(c) )
+						{checkN=0;break;}
+						
+						if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
+						{	
+							cc=1;checkN = 1;
+							setPiecesAgain(i,j,wN,indexI,indexJ);						
+						}
+						*/
+					}
+					if(cc==0)stepsUD++;
+					if(stepsUD!=1 && stepsLR!=3)checkN=0;	
+				}				
+			}
+			
+			if(indexIDest>indexI)
+			{
+				
+			}
+			
+		}
+			
+	}
+	
+}
+///////////////////
+
+//Method to move Queen and checks legal moves
+public void moveForWQBQ(int p)
+{
+
+	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
+	//you get starting pos e.g in above example you get a1
+	int indexI = intcordinatesfromString(abc,0);
+	int indexJ = intcordinatesfromString(abc,1);
+	//you get destination pos e.g in above example you get e5
+	int indexIDest = intcordinatesfromString(abc,3);
+	int indexJDest = intcordinatesfromString(abc,4);
+	
+	int i=0;
+	int j=0;	
+	int checkR = 0;
+	String al1 = "";String al2 = "";
+	
+	if(p==0) 
+	{
+		//This moves upper left or diagonl
+		/*
+		
+		if(indexJ<indexJDest)
+		{
+			if(indexIDest<indexI)
+			{
+				
+			}
+			
+			if(indexIDest>indexI)
+			{
+				
+			}
+			
+		}
+		*/
+		// if diagonal moves give you illegal message then this method will run
+		moveForWRBR(3); // This only takes care of front back left right movements
+	}
+	
+} 
 
 public void moveForWRBR(int p)
 {
@@ -305,7 +394,7 @@ public void moveForWRBR(int p)
 	if(p==1) {}
 	
 	//For White
-	if(p==0)
+	if(p==0 || p==3)
 	{
 		//This checks if I's are same then you're checking movements for Left  and Right
 		if(indexI==indexIDest)
@@ -328,11 +417,8 @@ public void moveForWRBR(int p)
 						if(i==indexIDest && j==indexJDest && !moveTracker.contains(c))
 						{	
 							checkR = 1;
-							String io = Integer.toString(i);
-							String jo = Integer.toString(j);
-							boards[i][j]=wR;
-							moveTracker.add(io + jo);
-							boards[indexI][indexJ]="   ";
+							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
+							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
 						}		
 					}
 				}
@@ -352,11 +438,8 @@ public void moveForWRBR(int p)
 						if(i==indexIDest && j==indexJDest)
 						{	
 							checkR = 1;
-							String io = Integer.toString(i);
-							String jo = Integer.toString(j);
-							boards[i][j]=wR;
-							moveTracker.add(io + jo);
-							boards[indexI][indexJ]="   ";
+							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
+							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
 						}
 					}
 				}			
@@ -380,11 +463,8 @@ public void moveForWRBR(int p)
 						if(i==indexIDest && j==indexJDest)
 						{	
 							checkR = 1;
-							String io = Integer.toString(i);
-							String jo = Integer.toString(j);
-							boards[i][j]=wR;
-							moveTracker.add(io + jo);
-							boards[indexI][indexJ]="   ";
+							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
+							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
 						}
 					}
 				} 
@@ -403,16 +483,13 @@ public void moveForWRBR(int p)
 						if(i==indexIDest && j==indexJDest)
 						{	
 							checkR = 1;
-							String io = Integer.toString(i);
-							String jo = Integer.toString(j);
-							boards[i][j]=wR;
-							moveTracker.add(io + jo);
-							boards[indexI][indexJ]="   ";
+							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
+							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
 						}
 					}
 				}				
 		}
-	}
+	}  
 		
 		//Make this a new method - it checks for black spots and paints them back
 	if(checkR==1)
@@ -428,5 +505,15 @@ public void moveForWRBR(int p)
 	
 	if(checkR==0 || checkR==3) System.out.println("Illegal move try again!");				
 }
-	
+
+//This method sets the new piece on the board,clears it and adds piece to arraylist
+public void setPiecesAgain(int i,int j,String piece,int indexII,int indexJJ)
+{
+	String io = Integer.toString(i);
+	String jo = Integer.toString(j);
+	boards[i][j]=piece;
+	moveTracker.add(io + jo);
+	boards[indexII][indexJJ]="   ";
+}
+
 }
