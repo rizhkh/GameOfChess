@@ -9,6 +9,7 @@ String[][] boardsNonEditable = new String[9][9]; //This one is a blank grid with
 String wR = "wR ";
 String wN = "wN ";
 String wQ = "wQ ";
+String wB = "wB ";
 
 public board()
 {
@@ -91,7 +92,7 @@ public board()
 	setBlackSpots();	
 	 //showBoard();
 }
-
+ 
 
 
 
@@ -140,14 +141,22 @@ public void initializePiece(String a)
 {
 	if(a.equals("wR"))
 		{
-		boards[7][0] = null;	
+		//boards[7][0] = null;	
 		boards[7][0] = wR;
-		//boards[7][1] = "wN ";
-		//boards[7][2] = "wB ";
-		//boards[7][3] = "wQ ";		
-		//boards[6][0] = "wp ";
-		boards[7][7] = null;
 		boards[7][7] = wR;
+		
+		boards[7][1] = wN;// "wN ";
+		boards[7][6] = wN;
+		
+		//boards[7][2] = "wB ";
+		
+		boards[7][3] = wQ;// "wQ ";
+		
+		boards[7][2] = wB;// "wB ";		
+		boards[7][5] = wB;// "wB ";
+		
+		//boards[6][0] = "wp ";
+		//boards[7][7] = null;
 		}
 }
 /*
@@ -158,13 +167,6 @@ public void move(int a)
 */
 
 
-
-//This method first checks the path of the piece-if clear it would send empty 
-//string but if not it would send the location it can move to
-public String isPathClear()
-{
-return "";
-}
 
 //This method checks if the given position is a Piece or not
 public boolean isPiece(int a,int b)
@@ -265,6 +267,8 @@ public String routeTranslation(String route)
 	if(s1=='f')posFors1 = 5;
 	if(s1=='g')posFors1 = 6;
 	if(s1=='h')posFors1 = 7;
+
+	
 	// 's2' is i
 	if(s2=='1')posFors2 = 7;
 	if(s2=='2')posFors2 = 6;
@@ -273,7 +277,8 @@ public String routeTranslation(String route)
 	if(s2=='5')posFors2 = 3;
 	if(s2=='6')posFors2 = 2;
 	if(s2=='7')posFors2 = 1;
-	if(s2=='8')posFors2 = 0;		
+	if(s2=='8')posFors2 = 0;
+
 	
 	char a = route.charAt(3); 
 	char b = route.charAt(4);
@@ -287,6 +292,8 @@ public String routeTranslation(String route)
 	if(a=='f')posForJ = 5;
 	if(a=='g')posForJ = 6;
 	if(a=='h')posForJ = 7;
+
+
 	// 'b' is i
 	if(b=='1')posForI = 7;
 	if(b=='2')posForI = 6;
@@ -295,14 +302,56 @@ public String routeTranslation(String route)
 	if(b=='5')posForI = 3;
 	if(b=='6')posForI = 2;
 	if(b=='7')posForI = 1;
-	if(b=='8')posForI = 0;	
-	
+	if(b=='8')posForI = 0;
 
-	String coordinate =String.valueOf(posFors2) + String.valueOf(posFors1) + " " + String.valueOf(posForI) + String.valueOf(posForJ);    
+	String coordinate = "";
+	
+	if(posFors2==55 || posFors1==55 || posForI==55 || posForJ==55)coordinate = "end";
+
+	coordinate =String.valueOf(posFors2) + String.valueOf(posFors1) + " " + String.valueOf(posForI) + String.valueOf(posForJ);    
 	return coordinate;
 }
 
+//FOR THE MAIN INPUT TO CHECK IF THE INPUT STRING IS VALID
+public String validity(String route)
+{
+	//Note: Change this to 3 and 4 later on
+ if(route.length()>=4)
+ {
+	char s1 = route.charAt(0); 
+	char s2 = route.charAt(1);
 
+	// 's1' is J
+	if(s1=='a')posFors1 = 0;if(s1=='b')posFors1 = 1;if(s1=='c')posFors1 = 2;if(s1=='d')posFors1 = 3;
+	if(s1=='e')posFors1 = 4;if(s1=='f')posFors1 = 5;if(s1=='g')posFors1 = 6;if(s1=='h')posFors1 = 7;
+	else {posFors1=55;}
+	
+	// 's2' is i
+	if(s2=='1')posFors2 = 7;if(s2=='2')posFors2 = 6;if(s2=='3')posFors2 = 5;if(s2=='4')posFors2 = 4;
+	if(s2=='5')posFors2 = 3;if(s2=='6')posFors2 = 2;if(s2=='7')posFors2 = 1;if(s2=='8')posFors2 = 0;
+	else {posFors2=55;}
+	
+	char a = route.charAt(3); 
+	char b = route.charAt(4);
+	
+	// 'a' is J
+	if(a=='a')posForJ = 0;if(a=='b')posForJ = 1;if(a=='c')posForJ = 2;if(a=='d')posForJ = 3;
+	if(a=='e')posForJ = 4;if(a=='f')posForJ = 5;if(a=='g')posForJ = 6;if(a=='h')posForJ = 7;
+	else {posForJ=55;}
+
+	// 'b' is i
+	if(b=='1')posForI = 7;if(b=='2')posForI = 6;if(b=='3')posForI = 5;if(b=='4')posForI = 4;
+	if(b=='5')posForI = 3;if(b=='6')posForI = 2;if(b=='7')posForI = 1;if(b=='8')posForI = 0;
+	else {posForI=55;}
+	String coordinate = "";
+	
+	if(posFors2==55 || posFors1==55 || posForI==55 || posForJ==55)coordinate = "end";
+
+	coordinate =String.valueOf(posFors2) + String.valueOf(posFors1) + " " + String.valueOf(posForI) + String.valueOf(posForJ);    
+	return coordinate;
+ }
+ else return "end";
+}
 
 
 
