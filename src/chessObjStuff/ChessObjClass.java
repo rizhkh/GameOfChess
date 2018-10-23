@@ -24,12 +24,12 @@ public ChessObjClass()
 	b.initializePiece(rook);
 	moveTracker.add("70"); //wR
 	moveTracker.add("77"); //wR starting pos in AL
-	
+	 
 	moveTracker.add("71"); // wN
 	moveTracker.add("76"); //wN 
 	//moveTracker.add("72");
 	moveTracker.add("73"); // wQ queen
-			
+	moveTracker.add("44");// wB
 	
 	b.showBoard();
 }
@@ -281,7 +281,7 @@ public void moveForwBbB(int p)
 	
 	int i=0;
 	int j=0;	
-	int checkR = 0;
+	int checkB = 0;
 	String al1 = "";String al2 = "";
 	
 	if(p==0)
@@ -289,42 +289,65 @@ public void moveForwBbB(int p)
 		//This moves upper left or right diagonal
 		if(indexI>indexIDest)
 		{
-			//moves up left diagonal
-			if(indexJDest<indexJ)
+			//moves upper left diagonal
+			if(indexJDest<indexJ && indexI>indexIDest)
 			{
 				for( i=indexI; i>=indexIDest; i--)
 				{
-					for( j=i; j>=indexJDest;j++)		//for( j=indexJ; j<8;j++)
+					for( j=i; j==i;j++)		//for( j=indexJ; j<8;j++)
 					{
-						System.out.println(i + "," + j);
-						/*
-						if(cc==0)stepsLR++;
 						al1 = Integer.toString(indexIDest);
 						al2 = Integer.toString(indexJDest);
 						String c = al1 + al2;
 						if( moveTracker.contains(c) )
-						{checkN=0;break;}
+						{checkB=0;break;}
 						
-						if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && (stepsLR==3 && stepsUD==0))
-						{	
-							cc=1;checkN = 1;
-							setPiecesAgain(i,j,wN,indexI,indexJ);						
+						if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c))
+						{	System.out.println("here");
+							checkB = 1;
+							setPiecesAgain(i,j,wB,indexI,indexJ);						
 						}
-						*/
+						
 					}
-					if(cc==0)stepsUD++;
-					if(stepsUD!=1 && stepsLR!=3)checkN=0;	
 				}				
 			}
 			
-			if(indexIDest>indexI)
+			//upper andright movements
+			if(indexJDest>indexJ && indexI>indexIDest)
 			{
-				
+				for( i=indexI; i>=indexIDest; i--)
+				{
+					for( j=i; j<=indexJDest;j++)		//for( j=indexJ; j<8;j++)
+					{
+						al1 = Integer.toString(indexIDest);
+						al2 = Integer.toString(indexJDest);
+						String c = al1 + al2;
+						if( moveTracker.contains(c) )
+						{checkB=0;break;}
+						
+						if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c))
+						{	checkB = 1;
+							setPiecesAgain(i,j,wB,indexI,indexJ);						
+						}
+						
+					}
+				}					
 			}
 			
-		}
-			
+		}		
 	}
+	
+	if(checkB==0) { System.out.println("Illegal move try again!");	}
+	if(checkB==1)
+	{ 
+			//REMOVE (indexI,IndexJ) from Arraylist
+			String g1 = Integer.toString(indexI);
+			String g2 = Integer.toString(indexJ);		
+			String g = g1+g2;
+			if( moveTracker.contains(g) )moveTracker.remove(g);
+			if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
+			System.out.println(moveTracker);
+	}		
 	
 }
 ///////////////////
