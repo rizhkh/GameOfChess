@@ -150,9 +150,9 @@ public void initializePiece(String a)
 		
 		//boards[7][2] = "wB ";
 		
-		boards[7][3] = wQ;// "wQ ";
+		boards[7][3] = wQ;// "wQ "; 
 		
-		boards[7][2] = wB;// "wB ";		
+		boards[4][4] = wB;// "wB ";		
 		boards[7][5] = wB;// "wB ";
 		
 		//boards[6][0] = "wp ";
@@ -171,10 +171,18 @@ public void move(int a)
 //This method checks if the given position is a Piece or not
 public boolean isPiece(int a,int b)
 {
-	if( ((boards[a][b]).equals(wR)) || ((boards[a][b]).equals(wQ)) || ((boards[a][b]).equals(wN)))
+	if( ((boards[a][b]).equals(wR)) || ((boards[a][b]).equals(wQ)) || ((boards[a][b]).equals(wN)) || ((boards[a][b]).equals(wB)) )
 	{
 		return true;
 	}
+	
+	/*
+	if( ((boards[a][b]).equals(bR)) || ((boards[a][b]).equals(bQ)) || ((boards[a][b]).equals(bN)) || ((boards[a][b]).equals(bB)) )
+	{
+		return true;
+	} 
+	*/
+	
 	return false;
 }
 
