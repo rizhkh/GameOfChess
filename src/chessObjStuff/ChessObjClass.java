@@ -23,16 +23,24 @@ public ChessObjClass()
 	//board b = new board();
 	b.initializePiece(rook);
 	moveTracker.add("70"); //wR
+	moveTracker.add("71"); // wN
+	moveTracker.add("72");// wB
+	moveTracker.add("73"); // wQ queen
+	moveTracker.add("74");// wK
+	moveTracker.add("75");// wB
+	moveTracker.add("76"); //wN 
 	moveTracker.add("77"); //wR starting pos in AL
 	 
-	moveTracker.add("71"); // wN
-	moveTracker.add("76"); //wN 
+
+	//moveTracker.add("76"); //wN 
 	//moveTracker.add("72");
-	moveTracker.add("73"); // wQ queen
-	moveTracker.add("72");// wB
+
+
 	
 	moveTracker.add("62");// wp1
 	moveTracker.add("65");// wp2
+	
+
 	
 	b.showBoard();
 }
@@ -73,7 +81,16 @@ public void move()
 		
 		if(a.equals("bN "))p=1;
 		moveForWQBQ(p); 
-	}	 
+	}
+	
+	if(a.equals(wK) || a.equals("bK ")) 
+	{
+		int p=0;
+		if(a.equals(wK))p=0;
+		
+		if(a.equals("bK "))p=1;
+		moveForwKbK(p); 
+	}	
 	
 	if(a.equals(wB) || a.equals("bB ")) 
 	{
@@ -84,16 +101,93 @@ public void move()
 		moveForwBbB(p); 
 	}
 	
-	if(a.equals(wP1) || a.equals(wP2) || a.equals("bP ")) //|| a.equals(wP3) || a.equals(wP4) || a.equals(wP5) || a.equals(wP6) || a.equals(wP7) || a.equals(wP8) || 
+	if(a.equals(wP0) || a.equals(wP1) || a.equals(wP2) || a.equals(wP3) || a.equals(wP4) 
+			|| a.equals(wP5) || a.equals(wP6) || a.equals(wP7)	
+			|| a.equals("bP ")) //|| a.equals(wP3) || a.equals(wP4) || a.equals(wP5) || a.equals(wP6) || a.equals(wP7) || a.equals(wP8) || 
 	{
 		int p=0;
-		if(a.equals(wP1) || a.equals(wP2))p=0;
+		if(a.equals(wP0) || a.equals(wP1) || a.equals(wP2) || a.equals(wP3) || a.equals(wP4) || a.equals(wP5) || a.equals(wP6) || a.equals(wP7) )p=0;
 		
 		if(a.equals("bB "))p=1;
 		moveForwPbP(p); 
 	}	
 	
 }
+
+
+public void moveForwKbK(int p)
+{
+	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
+	//you get starting pos e.g in above example you get a1
+	int indexI = intcordinatesfromString(abc,0);
+	int indexJ = intcordinatesfromString(abc,1);
+	//you get destination pos e.g in above example you get e5
+	int indexIDest = intcordinatesfromString(abc,3);
+	int indexJDest = intcordinatesfromString(abc,4);
+	
+	int i=0;
+	int j=0;	
+	int checkQ = 6;
+	String al1 = "";String al2 = "";
+	
+	if(p==0) 
+	{
+		
+		//This moves upward
+		if( indexIDest<indexI && indexIDest==indexI-1 )
+		{
+			//This checks up,up-left,up -right
+			if(indexJ==indexJDest || indexJ==indexJDest-1 || indexJ==indexJDest+1) 
+			{
+				checkQ = moveForwBbB(4);
+				if(checkQ==6) 
+					{			
+					checkQ=moveForWRBR(4);
+					}
+			}
+		}
+
+		//KINGS MOVE IS ONLY ON THE LEFT OR RIGHT
+		if( indexIDest==indexI )
+		{
+			//This only moves left while staying in the same row
+			if(indexJ>indexJDest && indexJDest==indexJ-1) 
+			{
+				checkQ = moveForwBbB(4);
+				if(checkQ==6) 
+					{			
+					checkQ=moveForWRBR(4);
+					}
+			}
+			//This only moves right while staying in the same row			
+			if(indexJ<indexJDest && indexJDest==indexJ+1) 
+			{
+				checkQ = moveForwBbB(4);
+				if(checkQ==6) 
+					{			
+					checkQ=moveForWRBR(4);
+					}
+			}				
+		}		
+
+		//This moves downward
+		if( indexIDest>indexI && indexIDest==indexI+1 )
+		{
+			//This checks down,down-left,down-right
+			if(indexJ==indexJDest || indexJ==indexJDest-1 || indexJ==indexJDest+1) 
+			{
+				checkQ = moveForwBbB(4);
+				if(checkQ==6) 
+					{			
+					checkQ=moveForWRBR(4);
+					}
+			}
+		}
+			
+	}
+	
+	if(checkQ==6) {System.out.println("Illegal move.");}	
+} 
 
 
 //NOTE: Only need to add overlapping moves now
@@ -136,8 +230,12 @@ public void moveForwPbP(int p)
 			{
 				for( i=indexI; i>=indexIDest; i--)
 				{		
-					al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
-					if( moveTracker.contains(c) )
+					al1 = Integer.toString(indexIDest);	
+					al2 = Integer.toString(indexJDest);
+					String al3 = ""  + Integer.toString(indexI-1);	
+					String d = al3 + al2;
+					String c = al1 + al2;
+					if( moveTracker.contains(c) ||  moveTracker.contains(d)  )
 					{
 						checkP=0;
 						break;
@@ -408,7 +506,7 @@ public int moveForwBbB(int p)
 	int checkB = 0;
 	String al1 = "";String al2 = "";
 	
-	if(p==0 || p==3)
+	if(p==0 || p==3 || p==4)
 	{
 			//moves upper left diagonal
 			if(indexJDest<indexJ && indexI>indexIDest)
@@ -430,6 +528,7 @@ public int moveForwBbB(int p)
 							checkB = 1;
 							if(p==0)setPiecesAgain(i,d,wB,indexI,indexJ);
 							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,d,wK,indexI,indexJ);							
 						}
 					d--;
 				}				
@@ -453,7 +552,8 @@ public int moveForwBbB(int p)
 						{	
 							checkB = 1;
 							if(p==0)setPiecesAgain(i,d,wB,indexI,indexJ);
-							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);				
+							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);	
+							if(p==4)setPiecesAgain(i,d,wK,indexI,indexJ);								
 						}
 					d++;
 				}					
@@ -475,7 +575,8 @@ public int moveForwBbB(int p)
 						{	
 							checkB = 1;
 							if(p==0)setPiecesAgain(i,d,wB,indexI,indexJ);
-							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);					
+							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,d,wK,indexI,indexJ);								
 						}
 						d--;
 				}				
@@ -497,7 +598,8 @@ public int moveForwBbB(int p)
 						{	
 							checkB = 1;
 							if(p==0)setPiecesAgain(i,d,wB,indexI,indexJ);
-							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);					
+							if(p==3)setPiecesAgain(i,d,wQ,indexI,indexJ);	
+							if(p==4)setPiecesAgain(i,d,wK,indexI,indexJ);								
 						}
 						d++;
 				}				
@@ -509,7 +611,8 @@ public int moveForwBbB(int p)
 	if(checkB==0) 
 	{
 		if(p==0)System.out.println("Illegal move try again!"); 
-		if(p==3)ret = 6;	
+		if(p==3)ret = 6; //WHITE QUEEN
+		if(p==4)ret = 6; //WHITE KING	
 	}
 	if(checkB==1)
 	{ 
@@ -596,7 +699,7 @@ public int moveForWRBR(int p)
 	if(p==1) {}
 	
 	//For White
-	if(p==0 || p==3)
+	if(p==0 || p==3 || p==4) //NOTE: P==3 IS WHITE QUEEN P==4 IS WHITE KING
 	{
 		//This checks if I's are same then you're checking movements for Left  and Right
 		if(indexI==indexIDest)
@@ -621,6 +724,7 @@ public int moveForWRBR(int p)
 							checkR = 1;
 							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
 							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,j,wK,indexI,indexJ);							
 						}		
 					}
 				}
@@ -642,6 +746,7 @@ public int moveForWRBR(int p)
 							checkR = 1;
 							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
 							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,j,wK,indexI,indexJ);								
 						}
 					}
 				}			
@@ -667,6 +772,7 @@ public int moveForWRBR(int p)
 							checkR = 1;
 							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
 							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,j,wK,indexI,indexJ);								
 						}
 					}
 				} 
@@ -687,6 +793,7 @@ public int moveForWRBR(int p)
 							checkR = 1;
 							if(p==0)setPiecesAgain(i,j,wR,indexI,indexJ);
 							if(p==3)setPiecesAgain(i,j,wQ,indexI,indexJ);
+							if(p==4)setPiecesAgain(i,j,wK,indexI,indexJ);								
 						}
 					}
 				}				
@@ -708,7 +815,8 @@ public int moveForWRBR(int p)
 	if(checkR==0 || checkR==3)
 		{
 		if(p==0)System.out.println("Illegal move try again!"); 
-		if(p==3)ret = 6;			
+		if(p==3)ret = 6;	//WHITE QUIEEN
+		if(p==4)ret = 6;	//WHITE KING		
 		}
 	return ret;
 }
