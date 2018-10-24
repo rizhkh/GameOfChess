@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class ChessObjClass extends board {
 
 static ArrayList<String> moveTracker = new ArrayList<String>();	
-	
+static ArrayList<String> moveTrackerBlack = new ArrayList<String>();	
+
+
 int rookcount = 2;
 int knight = 2;
-int queen = 1;
+int queen = 1; 
 	
 //when game is started this becomes 1
 int start = 1;
@@ -22,6 +24,7 @@ public ChessObjClass()
 {
 	//board b = new board();
 	b.initializePiece(rook);
+	//WHITE PIECES
 	moveTracker.add("70"); //wR
 	moveTracker.add("71"); // wN
 	moveTracker.add("72");// wB
@@ -31,16 +34,33 @@ public ChessObjClass()
 	moveTracker.add("76"); //wN 
 	moveTracker.add("77"); //wR starting pos in AL
 	 
+	moveTracker.add("60");// wp0
+	moveTracker.add("61");// wp1	
+	moveTracker.add("62");// wp2
+	moveTracker.add("63");// wp3
+	moveTracker.add("64");// wp4	
+	moveTracker.add("65");// wp5
+	moveTracker.add("66");// wp6
+	moveTracker.add("67");// wp7	
 
-	//moveTracker.add("76"); //wN 
-	//moveTracker.add("72");
-
-
-	
-	moveTracker.add("62");// wp1
-	moveTracker.add("65");// wp2
-	
-
+	//BLACK PIECES
+	moveTrackerBlack.add("00"); //bR
+	moveTrackerBlack.add("01"); // bN
+	moveTrackerBlack.add("02");// bB
+	moveTrackerBlack.add("03"); // bQ queen
+	moveTrackerBlack.add("04");// bK
+	moveTrackerBlack.add("05");// bB
+	moveTrackerBlack.add("06"); //bN 
+	moveTrackerBlack.add("07"); //bR starting pos in AL
+	 
+	moveTrackerBlack.add("10");// bp0
+	moveTrackerBlack.add("11");// bp1	
+	moveTrackerBlack.add("12");// bp2
+	moveTrackerBlack.add("13");// bp3
+	moveTrackerBlack.add("14");// bp4	
+	moveTrackerBlack.add("15");// bp5
+	moveTrackerBlack.add("16");// bp5
+	moveTrackerBlack.add("17");// bp7	
 	
 	b.showBoard();
 }
@@ -677,6 +697,20 @@ public void moveForWQBQ(int p)
 
 public int moveForWRBR(int p)
 {
+	
+	/*
+	if(p==0)PP = wN; //White
+	if(p==3)PP = wQ; //White Queen
+	if(p==4)PP = wK; //White King
+	
+	if(p==1)PP = bN; //Black
+	if(p==8)PP = bQ; //Black Queen
+	if(p==9)PP = bK; //Black King	
+	
+	*REPLACE ALL wN WITH PP 
+	*/
+	
+	
 	int ret = 5;
 	//**************************NOTE : ADD CASTLING	
 	String abc = getCoordinates(); //You get a whole string of input e.g "a1 e5"
