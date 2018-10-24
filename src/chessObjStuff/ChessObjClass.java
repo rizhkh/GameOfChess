@@ -95,6 +95,8 @@ public void move()
 	
 }
 
+
+//NOTE: Only need to add overlapping moves now
 public void moveForwPbP(int p)
 {
 	String abc = getCoordinates();
@@ -122,27 +124,57 @@ public void moveForwPbP(int p)
 	String al1 = "";String al2 = "";	
 
 	int stepsP=0;
-
+	int checkP2 = 0;
 	
-	if(indexI>indexIDest && indexIDest==indexI-1)
-	j = indexJ;
-	for( i=indexI; i>=indexIDest; i--)
+	if(indexI>indexIDest) //&& indexIDest==indexI-1)
 	{
-		al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
-		if( moveTracker.contains(c) )
+		j = indexJ;
+		
+		if(indexI>indexIDest && indexIDest==indexI-2)
 		{
-			checkP=0;
-			break;
-		}
-				
-		if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && stepsP==1)
-		{	
-			checkP = 1;
-			setPiecesAgain(i,j,wP1,indexI,indexJ);
+			if(wPP.getFirstMove()==0)
+			{
+				for( i=indexI; i>=indexIDest; i--)
+				{		
+					al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
+					if( moveTracker.contains(c) )
+					{
+						checkP=0;
+						break;
+					}	
+					if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && stepsP==2)
+					{	
+						checkP = 1;
+						setPiecesAgain(i,j,wP1,indexI,indexJ);
+						wPP.setFirstMove(1);
+						checkP2 = 1;
+					}
+					stepsP++;
+				}				
+			}
+			
+			if(wPP.getFirstMove()!=0 && checkP2==0)checkP=0;		
 		}
 		
-		stepsP++;
-	}	
+		if(indexI>indexIDest && indexIDest==indexI-1)
+		for( i=indexI; i>=indexIDest; i--)
+		{
+			al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
+			if( moveTracker.contains(c) )
+			{
+				checkP=0;
+				break;
+			}
+					
+			if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && stepsP==1)
+			{	
+				checkP = 1;
+				setPiecesAgain(i,j,wP1,indexI,indexJ);
+				wPP.setFirstMove(1);
+			}
+			stepsP++;
+		}			
+	}
 	
 	if(checkP==0) { System.out.println("Illegal move try again!");	}
 	if(checkP==1)
