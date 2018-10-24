@@ -2,14 +2,34 @@ package chessObjStuff;
 
 public class board implements typeInter {
 
+
+static String indexForObj1 = "";
+static String indexForObj2 = "";
+	
+	
 static String[][] boards = new String[9][9];	
 String[][] boardsNonEditable = new String[9][9]; //This one is a blank grid with blackspots to check which
 //index has a black spot so then we can add blackspots on the static array
 
-String wR = "wR ";
-String wN = "wN ";
-String wQ = "wQ ";
-String wB = "wB ";
+//public chessPieceInfo(String piece, String color,int id,int firstMove)
+chessPieceInfo wQObj = new chessPieceInfo("wQ ","white",0,0);
+chessPieceInfo wRObj = new chessPieceInfo("wR ","white",0,0);
+chessPieceInfo wNObj = new chessPieceInfo("wN ","white",0,0);
+chessPieceInfo wBObj = new chessPieceInfo("wB ","white",0,0);
+
+chessPieceInfo wPObj1 = new chessPieceInfo("wP ","white",62,0);
+chessPieceInfo wPObj2 = new chessPieceInfo("wP ","white",65,0);
+chessPieceInfo wPObj3 = new chessPieceInfo("wP ","white",3,0);
+chessPieceInfo wPObj4 = new chessPieceInfo("wP ","white",4,0);
+chessPieceInfo wPObj5 = new chessPieceInfo("wP ","white",5,0); 
+
+String wR = wRObj.piece;
+String wN = wNObj.piece;
+String wQ = wQObj.piece; //"wQ ";
+String wB = wBObj.piece;
+
+String wP1 = wPObj1.piece;
+String wP2 = wPObj2.piece;
 
 public board()
 {
@@ -152,8 +172,11 @@ public void initializePiece(String a)
 		
 		boards[7][3] = wQ;// "wQ "; 
 		
-		boards[4][4] = wB;// "wB ";		
+		boards[7][2] = wB;// "wB ";		
 		boards[7][5] = wB;// "wB ";
+
+		boards[6][2] = wPObj1.getName();
+		boards[6][5] = wPObj2.getName();	
 		
 		//boards[6][0] = "wp ";
 		//boards[7][7] = null;
@@ -166,12 +189,37 @@ public void move(int a)
 }
 */
 
+//This method is created so we can return the object reference in the other class to access specically the id of that piece - in this case each pawn has a sep id
+public chessPieceInfo getObject(String wP,String aa, String bb)
+{
+	chessPieceInfo a = new chessPieceInfo();
+	
+	String abcd = "" + aa + "" + bb;
+	
+	int IDindex = Integer.parseInt(abcd);
+	
+	//Note: the numbers in the string indicate the location and that is how We get their ID's - if the locat
+	
+	if( wPObj1.getID()==IDindex ) //wP.equals(wP1) )//wP.equals("62") )
+	{
+		a = wPObj1;
+	}
+
+	if( wPObj2.getID()==IDindex ) //wP.equals(wP1) )//wP.equals("65") )
+	{	
+		a = wPObj2;
+	}	
+	
+	return a;
+}
 
 
 //This method checks if the given position is a Piece or not
 public boolean isPiece(int a,int b)
 {
-	if( ((boards[a][b]).equals(wR)) || ((boards[a][b]).equals(wQ)) || ((boards[a][b]).equals(wN)) || ((boards[a][b]).equals(wB)) )
+	if( ((boards[a][b]).equals(wR)) || ((boards[a][b]).equals(wQ)) || ((boards[a][b]).equals(wN)) || ((boards[a][b]).equals(wB)) 
+		|| ((boards[a][b]).equals(wP1) ) || ((boards[a][b]).equals(wP2) )
+			)
 	{
 		return true;
 	}
@@ -264,7 +312,9 @@ public String routeTranslation(String route)
 
 	char s1 = route.charAt(0); 
 	char s2 = route.charAt(1);
-	
+
+	indexForObj1 = "" + s1;
+	indexForObj1 = "" + s2;	
 	
 	// 's1' is J
 	if(s1=='a')posFors1 = 0;
@@ -321,6 +371,7 @@ public String routeTranslation(String route)
 }
 
 //FOR THE MAIN INPUT TO CHECK IF THE INPUT STRING IS VALID
+
 public String validity(String route)
 {
 	//Note: Change this to 3 and 4 later on
@@ -328,6 +379,7 @@ public String validity(String route)
  {
 	char s1 = route.charAt(0); 
 	char s2 = route.charAt(1);
+	
 
 	// 's1' is J
 	if(s1=='a')posFors1 = 0;if(s1=='b')posFors1 = 1;if(s1=='c')posFors1 = 2;if(s1=='d')posFors1 = 3;
