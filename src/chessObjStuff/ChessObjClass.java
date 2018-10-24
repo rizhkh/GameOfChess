@@ -31,6 +31,9 @@ public ChessObjClass()
 	moveTracker.add("73"); // wQ queen
 	moveTracker.add("72");// wB
 	
+	moveTracker.add("62");// wp1
+	moveTracker.add("65");// wp2
+	
 	b.showBoard();
 }
 
@@ -70,7 +73,7 @@ public void move()
 		
 		if(a.equals("bN "))p=1;
 		moveForWQBQ(p); 
-	}	
+	}	 
 	
 	if(a.equals(wB) || a.equals("bB ")) 
 	{
@@ -78,11 +81,88 @@ public void move()
 		if(a.equals(wB))p=0;
 		
 		if(a.equals("bB "))p=1;
-		
 		moveForwBbB(p); 
+	}
+	
+	if(a.equals(wP1) || a.equals(wP2) || a.equals("bP ")) //|| a.equals(wP3) || a.equals(wP4) || a.equals(wP5) || a.equals(wP6) || a.equals(wP7) || a.equals(wP8) || 
+	{
+		int p=0;
+		if(a.equals(wP1) || a.equals(wP2))p=0;
+		
+		if(a.equals("bB "))p=1;
+		moveForwPbP(p); 
+	}	
+	
+}
+
+public void moveForwPbP(int p)
+{
+	String abc = getCoordinates();
+	int indexI = intcordinatesfromString(abc,0);int indexJ = intcordinatesfromString(abc,1);
+	//you get destination pos e.g in above example you get e5
+	int indexIDest = intcordinatesfromString(abc,3);int indexJDest = intcordinatesfromString(abc,4);	
+
+	chessPieceInfo wPP = new chessPieceInfo(); 
+	
+	String wpPiece = "";
+	//This only works for the very first moves
+	if(indexI==6 && indexJ==2)wpPiece = "62"; 
+	if(indexI==6 && indexJ==5)wpPiece = "65"; 
+
+	char idI1 = abc.charAt(0);
+	String idI = String.valueOf(idI1);
+	char idJ1 = abc.charAt(1);
+	String idJ = String.valueOf(idJ1);	
+
+	//This will check the id
+	wPP = getObject(wpPiece,idI,idJ);
+
+	int i=0;int j=0;
+	int checkP = 0;
+	String al1 = "";String al2 = "";	
+
+	int stepsP=0;
+
+	
+	if(indexI>indexIDest && indexIDest==indexI-1)
+	j = indexJ;
+	for( i=indexI; i>=indexIDest; i--)
+	{
+		al1 = Integer.toString(indexIDest);	al2 = Integer.toString(indexJDest);	String c = al1 + al2;
+		if( moveTracker.contains(c) )
+		{
+			checkP=0;
+			break;
+		}
+				
+		if( (i==indexIDest && j==indexJDest) && !moveTracker.contains(c) && stepsP==1)
+		{	
+			checkP = 1;
+			setPiecesAgain(i,j,wP1,indexI,indexJ);
+		}
+		
+		stepsP++;
+	}	
+	
+	if(checkP==0) { System.out.println("Illegal move try again!");	}
+	if(checkP==1)
+	{ 
+			//REMOVE (indexI,IndexJ) from Arraylist
+		//setting id if legal move PUT THIS IN THE CHECK IF THE MOVE IS LEGAL
+			String aaaaa = "" + indexIDest + "" +indexJDest;
+			int bbbbb = Integer.parseInt(aaaaa);	
+			wPP.setID(bbbbb);		
+			String g1 = Integer.toString(indexI);
+			String g2 = Integer.toString(indexJ);		
+			String g = g1+g2;
+			if( moveTracker.contains(g) )moveTracker.remove(g);
+			if( boardsNonEditable[indexI][indexJ]=="##" )boards[indexI][indexJ]="## ";
+			System.out.println(moveTracker);
 	}		
 	
 }
+
+
 
 //Moves for Knight
 public void moveForwNbN(int p)
@@ -453,9 +533,7 @@ public void moveForWQBQ(int p)
 		// if diagonal moves give you illegal message then this method will run
 		
 		checkQ = moveForwBbB(3);
-		System.out.println("return from wbbb: " + checkQ);
 		if(checkQ==6) {checkQ=moveForWRBR(3);} // This only takes care of front back left right movements
-		System.out.println("return from WRBR: " + checkQ);
 	}
 	
 	if(checkQ==6) {System.out.println("Illegal");}
