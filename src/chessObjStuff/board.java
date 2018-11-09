@@ -2,7 +2,7 @@ package chessObjStuff;
 
 /**
  * 
- * @author Rizwan Khan(mrk150) and Ahmed Ghoneim(asg179)
+ * 
  * @version 1.0
  * Displays the board and sets the pieces
  *
