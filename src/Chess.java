@@ -4,7 +4,7 @@ import chessObjStuff.board;
 
 /**
  * 
- * @author Rizwan Khan(mrk150) && Ahmed Ghoneim(asg179)
+ * 
  * @version 1.0
  * Main application driver for Chess project
  *
