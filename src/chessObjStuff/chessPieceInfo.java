@@ -2,7 +2,7 @@ package chessObjStuff;
 
 /**
  * 
- * @author Rizwan Khan(mrk 150) && Ahmed Ghoneim(asg179)
+ * 
  * @version 1.0
  * Class to represent Chess piece types
  *
