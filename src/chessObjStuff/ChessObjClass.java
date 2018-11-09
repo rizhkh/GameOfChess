@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Rizwan Khan(mrk150) && Ahmed Ghoneim(asg179)
+ * 
  * @version 1.0
  * This class contains all the possible movements for any piece
  * as well as illegal moves, castling, and check as well as checkmate
